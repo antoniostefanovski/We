@@ -15,6 +15,10 @@ public class TicketOrderRepository {
         TicketOrders = new ArrayList<>();
     }
 
+    public List<TicketOrder> getTicketOrders() {
+        return TicketOrders;
+    }
+
     public TicketOrder placeOrder(String movieTitle, String clientName, String address, Long numberOfTickets) {
 
         var ticketOrder = new TicketOrder(movieTitle, clientName, address, numberOfTickets);
@@ -24,5 +28,18 @@ public class TicketOrderRepository {
         return ticketOrder;
 
     }
+
+    public List<String> getClientMovies(String clientName) {
+
+        var tickets = getTicketOrders();
+
+        return tickets.stream()
+                .filter(u -> u.getClientName().equals(clientName))
+                .map(TicketOrder::getMovieTitle)
+                .toList();
+
+    }
+
+
 
 }

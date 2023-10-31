@@ -26,6 +26,25 @@ public class TicketOrderServlet extends HttpServlet {
     }
 
     @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        IWebExchange webExchange = JakartaServletWebApplication
+                .buildApplication(getServletContext())
+                .buildExchange(req, resp);
+
+        WebContext webContext = new WebContext(webExchange);
+
+        var users = ticketOrderService.getTicketOrders();
+
+        webContext.setVariable("users", users);
+
+
+        springTemplateEngine.process("userData.html", webContext, resp.getWriter());
+
+
+    }
+
+    @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         IWebExchange webExchange = JakartaServletWebApplication
@@ -41,7 +60,7 @@ public class TicketOrderServlet extends HttpServlet {
 
         webContext.setVariable("movie", movie);
         webContext.setVariable("numberOfTickets", numberOfTickets);
-        webContext.setVariable("clietName", clientName);
+        webContext.setVariable("clientName", clientName);
         webContext.setVariable("clientAddress", address);
 
         ticketOrderService.placeOrder(movie, clientName, address, numberOfTickets);
