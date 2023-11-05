@@ -18,6 +18,28 @@
 </header>
 <main>
 
+    <th:block>
+        <div th:text="${userViews?:0}"></div>
+    </th:block>
+
+
+    <h3>User Info</h3>
+    <th:block th:if="${session.user!=null}">
+        <h2>Info about user</h2>
+        <div th:text="${session.user.username}"></div>
+        <div th:text="${session.user.name}"></div>
+        <div th:text="${session.user.surname}"></div>
+        <div>
+            <a href="/logout">Logout</a>
+        </div>
+    </th:block>
+    <th:block th:if="${session.user==null}">
+        <div>
+            <a href="/login">Login</a>
+        </div>
+    </th:block>
+
+
     <form th:method="get" th:action="@{/}">
         <h2>Filter movie:</h2>
 

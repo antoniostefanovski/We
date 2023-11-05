@@ -48,6 +48,11 @@ public class MovieServlet extends HttpServlet {
 
         webContext.setVariable("movies", movies);
 
+        Integer userViews = (Integer) getServletContext().getAttribute("userViews");
+        getServletContext().setAttribute("userViews", ++userViews);
+        webContext.setVariable("userViews", getServletContext().getAttribute("userViews"));
+
+
         springTemplateEngine.process("listMovies.html", webContext, resp.getWriter());
 
 
