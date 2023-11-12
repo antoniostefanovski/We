@@ -1,0 +1,77 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Movie Ticket Order page - Welcome and choose a Movie</title>
+    <style type="text/css">
+        body {
+            width: 800px;
+            margin: auto;
+        }
+        ul {
+            list-style-type: none;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>Welcome to our Movie Ticket Shop App</h1>
+</header>
+<main>
+
+    <form th:method="get" th:action="@{/}">
+        <h2>Filter movie:</h2>
+
+        <input type="text" name="movie_title"><br>
+        <p>Filter movies by rating</p>
+        <input min="1" max="10" type="number" name="rating"><br><br>
+
+        <input type="submit" value="Filter movies">
+    </form>
+
+    <div>
+        <a th:href="@{/movies/add}"><button>Add Movie</button></a>
+    </div>
+
+    <div>
+        <ul th:each="movie1 : ${movies}">
+            <li>
+                <span th:text="'Title ' + ${movie1.getTitle()} + ' Summary ' + ${movie1.getSummary()} + ' Rating ' + ${movie1.getRating()}
+                        + ' Production: ' + ${movie1.getProduction().getName()} + ' (' + ${movie1.getProduction().getCountry()} + ')'"></span>
+                <a th:href="@{'/movies/edit-movie/{movieId}' (movieId=${movie1.getId()})}"><button>Edit</button></a>
+                <form th:action="@{'/movies/delete-movie/{id}' (id=${movie1.getId()})}" th:method="DELETE">
+                    <button type="submit">Delete</button>
+                </form>
+            </li>
+        </ul>
+    </div>
+
+    <h2>Choose movie:</h2>
+    <form th:method="post" th:action="@{/ticketOrder}">
+
+        <h2>Your name</h2>
+        <input type="text" name="clientName"/><br/>
+
+        <ul th:each="movie : ${movies}">
+
+            <li>
+                <input type="radio" name="movie" id="movie"
+                       th:value="${movie.getTitle()}"
+                       th:text="'Title ' + ${movie.getTitle()} + ' Summary ' + ${movie.getSummary()} + ' Rating ' + ${movie.getRating()}
+                        + ' Production: ' + ${movie.getProduction().getName()} + ' (' + ${movie.getProduction().getCountry()} + ')'" required/><br/>
+            </li>
+
+        </ul>
+
+        <h2>Choose number of tickets:</h2>
+        <input type="number" name="numTickets" min="1" max="10"><br/>
+        <br/>
+        <input type="submit" value="Submit">
+
+    </form>
+
+    <div th:if="${hasError}" class="error">
+        <div th:text="${error}"></div>
+    </div>
+</main>
+</body>
+</html>
