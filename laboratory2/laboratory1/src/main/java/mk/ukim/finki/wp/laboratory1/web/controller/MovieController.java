@@ -22,7 +22,10 @@ public class MovieController {
     @GetMapping
     public String getMoviesPage(@RequestParam(required = false) String error, Model model) {
         model.addAttribute("movies", movieService.listAll());
-        model.addAttribute("hasError", false);
+        
+        if(error != null && !error.isEmpty()) {
+            model.addAttribute("error", error);
+        }
 
         return "listMovies";
     }
@@ -44,7 +47,7 @@ public class MovieController {
 
             return "/add-movie";
         }
-        return "redirect:/movies";
+        return "redirect:/movies?error=A movie with the given id does not exist!";
     }
 
     @PostMapping("/add-movie")
