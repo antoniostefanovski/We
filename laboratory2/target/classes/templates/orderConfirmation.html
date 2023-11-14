@@ -37,13 +37,15 @@
         </tr>
         <tr>
             <td><b>Ticket for Movie</b></td>
-            <td><span th:text="${movie}"></span></td>
+            <td><span th:text="${movie.getTitle()}"></span></td>
         </tr>
         <tr>
             <td><b>Number of tickets</b></td>
             <td><span th:text="${numberOfTickets}"></span></td>
         </tr>
     </table>
+
+    <a class="btn btn-primary" th:href="@{/movies}">Back</a>
 </section>
 </body>
 </html>

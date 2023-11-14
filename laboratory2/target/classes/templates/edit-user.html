@@ -1,0 +1,64 @@
+<div xmlns:th="http://www.thymeleaf.org">
+    <section class="jumbotron text-center">
+        <div class="container">
+            <h1 class="jumbotron-heading">LAB</h1>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5">
+                <form action="/ticketOrder/edit" method="POST">
+                    <input id="id" type="hidden" name="id"
+                           th:value="(${ticketOrder} != null ? ${ticketOrder.getTicketId()} : '')">
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text"
+                               class="form-control"
+                               id="username"
+                               name="username"
+                               th:value="(${ticketOrder} != null ? ${ticketOrder.getClientName()} : '')"
+                               placeholder="Rating">
+                    </div>
+                    <div class="form-group">
+                        <label>Production</label>
+                        <select name="movieId" class="form-control">
+                            <option th:if="${ticketOrder} != null"
+                                    th:selected="${ticketOrder.movie.getTitle() != null &&
+                                ticketOrder.getMovie().getId() == movie.getId()}"
+                                    th:each="movie : ${movies}"
+                                    th:value="${movie.getId()}"
+                                    th:text="${movie.getTitle()}">
+                            </option>
+                            <option th:if="${ticketOrder} == null"
+                                    th:each="movie : ${movies}"
+                                    th:value="${movie.getId()}"
+                                    th:text="${movie.getTitle()}">
+                            </option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="tickets">Number of Tickets</label>
+                        <input type="text"
+                               class="form-control"
+                               id="tickets"
+                               name="tickets"
+                               th:value="(${ticketOrder} != null ? ${ticketOrder.getNumberOfTickets()} : '')"
+                               placeholder="Summary">
+                    </div>
+                    <div class="form-group">
+                        <label for="clientAddress">Client Address</label>
+                        <input type="text"
+                               class="form-control"
+                               id="clientAddress"
+                               name="clientAddress"
+                               th:value="(${ticketOrder} != null ? ${ticketOrder.getClientAddress()} : '')"
+                               placeholder="Summary">
+                    </div>
+                    <button id="submit" type="submit" class="btn btn-primary">Submit</button>
+                    <a type="button" class="btn btn-primary" href="/ticketOrder">Back</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
