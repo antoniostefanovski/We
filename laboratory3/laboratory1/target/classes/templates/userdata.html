@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Movie Ticket - User Data Page</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+
+<h2>Users</h2>
+
+<ul th:each="order : ${orders}">
+    <li>
+        <span th:text="'Username: ' + ${order.user.getFullName()} + ' Movie: ' + ${order.movie.getTitle()} + ' Tickets: '+ ${order.getNumberOfTickets()}"></span>
+        <a class="btn btn-primary" th:href="@{/ticketOrder/edit-user/{ticketId}(ticketId=${order.getId()})}">Edit Movie</a>
+    </li>
+</ul>
+
+<a class="btn btn-primary" th:href="@{/movies}">Back</a>
+
+</body>
+</html>
